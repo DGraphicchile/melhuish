@@ -1,15 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Filter, Fuel, Settings, Calendar, Gauge } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getBranchesByType, mockUsedVehicles } from '../lib/mockData';
 import { UsedVehicle, Branch } from '../lib/types';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 
 export function UsedVehicles() {
-  const [vehicles, setVehicles] = useState<UsedVehicle[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [onlyOffers, setOnlyOffers] = useState(false);
@@ -17,72 +15,23 @@ export function UsedVehicles() {
   const [sortBy, setSortBy] = useState<string>('newest');
 
   useEffect(() => {
-    fetchBranches();
+    setBranches(getBranchesByType('sales').sort((a, b) => a.name.localeCompare(b.name)));
   }, []);
 
-  useEffect(() => {
-    fetchVehicles();
+  const vehicles = useMemo(() => {
+    let list = mockUsedVehicles.filter((v) => v.is_available);
+    if (selectedBrand) list = list.filter((v) => v.brand === selectedBrand);
+    if (selectedCategory) list = list.filter((v) => v.category === selectedCategory);
+    if (onlyOffers) list = list.filter((v) => v.is_offer);
+    if (selectedBranch) list = list.filter((v) => v.branch_id === selectedBranch);
+    if (sortBy === 'price_asc') list = [...list].sort((a, b) => a.price_cash - b.price_cash);
+    else if (sortBy === 'price_desc') list = [...list].sort((a, b) => b.price_cash - a.price_cash);
+    else if (sortBy === 'oldest') list = [...list].sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    else list = [...list].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return list;
   }, [selectedBrand, selectedCategory, onlyOffers, selectedBranch, sortBy]);
 
-  const fetchBranches = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('branches')
-        .select('*')
-        .in('type', ['sales', 'both'])
-        .order('name');
-
-      if (error) throw error;
-      setBranches(data || []);
-    } catch (error) {
-      console.error('Error fetching branches:', error);
-    }
-  };
-
-  const fetchVehicles = async () => {
-    setLoading(true);
-    try {
-      let query = supabase
-        .from('used_vehicles')
-        .select('*')
-        .eq('is_available', true);
-
-      if (selectedBrand) {
-        query = query.eq('brand', selectedBrand);
-      }
-
-      if (selectedCategory) {
-        query = query.eq('category', selectedCategory);
-      }
-
-      if (onlyOffers) {
-        query = query.eq('is_offer', true);
-      }
-
-      if (selectedBranch) {
-        query = query.eq('branch_id', selectedBranch);
-      }
-
-      if (sortBy === 'price_asc') {
-        query = query.order('price_cash', { ascending: true });
-      } else if (sortBy === 'price_desc') {
-        query = query.order('price_cash', { ascending: false });
-      } else if (sortBy === 'oldest') {
-        query = query.order('created_at', { ascending: true });
-      } else {
-        query = query.order('created_at', { ascending: false });
-      }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-      setVehicles(data || []);
-    } catch (error) {
-      console.error('Error fetching vehicles:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const loading = false;
 
   const formatPrice = (price: number) => {
     return `$${price.toLocaleString('es-CL')}`;
@@ -93,12 +42,12 @@ export function UsedVehicles() {
 
   return (
     <div className="min-h-screen bg-bg-alt">
-      <div className="bg-gradient-to-r from-accent to-secondary text-white py-16">
+      <div className="bg-gradient-blue text-white py-14 rounded-b-[2rem]">
         <div className="container-custom">
-          <div className="flex items-center justify-center mb-6">
-            <h1 className="text-4xl lg:text-5xl font-bold text-white">Seminuevos & Usados</h1>
+          <div className="flex items-center justify-center mb-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Seminuevos & Usados</h1>
           </div>
-          <p className="text-xl text-center text-white">
+          <p className="text-lg sm:text-xl text-center text-white/90">
             Vive el verano con bonos y descuentos imperdibles
           </p>
 

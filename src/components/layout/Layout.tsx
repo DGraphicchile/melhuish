@@ -8,9 +8,9 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[hsl(var(--color-bg-alt))]">
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-white">{children}</main>
       <Footer />
       <WhatsAppButton />
     </div>

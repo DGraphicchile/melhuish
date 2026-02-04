@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { getBranchesByType } from '../../lib/mockData';
 import { Branch } from '../../lib/types';
 
 export function BranchesSection() {
@@ -9,28 +9,11 @@ export function BranchesSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchBranches();
+    const data = getBranchesByType('sales').sort((a, b) => a.name.localeCompare(b.name));
+    setBranches(data);
+    if (data.length > 0) setSelectedBranch(data[0]);
+    setLoading(false);
   }, []);
-
-  const fetchBranches = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('branches')
-        .select('*')
-        .in('type', ['sales', 'both'])
-        .order('name');
-
-      if (error) throw error;
-      setBranches(data || []);
-      if (data && data.length > 0) {
-        setSelectedBranch(data[0]);
-      }
-    } catch (error) {
-      console.error('Error fetching branches:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -43,9 +26,14 @@ export function BranchesSection() {
   }
 
   return (
-    <section className="branch-locator py-16">
+    <section className="branch-locator py-10 lg:py-14 section-curve-sm">
       <div className="container mx-auto px-4">
-        <h2 className="text-center mb-12 text-white">Sala de Ventas</h2>
+        <div className="text-center mb-12">
+          <p className="text-sm font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-light-blue)' }}>
+            Ubicación
+          </p>
+          <h2 className="text-3xl lg:text-4xl font-bold text-white">Sala de Ventas</h2>
+        </div>
 
         <div className="flex flex-wrap gap-4 justify-center mb-8">
           {branches.map((branch) => (

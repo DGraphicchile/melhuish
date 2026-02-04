@@ -29,6 +29,27 @@ function App() {
     }
   }, [currentPath]);
 
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+    const t = setTimeout(() => {
+      const els = document.querySelectorAll('.reveal-section');
+      if (!els.length) return;
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add('is-visible');
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+      );
+      els.forEach((el) => observer!.observe(el));
+    }, 50);
+    return () => {
+      clearTimeout(t);
+      observer?.disconnect();
+    };
+  }, [currentPath]);
+
   const renderPage = () => {
     if (currentPath === '/') {
       return <Home />;

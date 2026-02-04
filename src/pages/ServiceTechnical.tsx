@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Wrench, Clock, MapPin, Phone, Mail } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getBranchesByType } from '../lib/mockData';
 import { Branch, ServiceAppointmentFormData } from '../lib/types';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
@@ -30,35 +30,14 @@ export function ServiceTechnical() {
   });
 
   useEffect(() => {
-    fetchBranches();
+    setBranches(getBranchesByType('service').sort((a, b) => a.name.localeCompare(b.name)));
   }, []);
-
-  const fetchBranches = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('branches')
-        .select('*')
-        .in('type', ['service', 'both'])
-        .order('name');
-
-      if (error) throw error;
-      setBranches(data || []);
-    } catch (error) {
-      console.error('Error fetching branches:', error);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const { error } = await supabase
-        .from('service_appointments')
-        .insert([formData]);
-
-      if (error) throw error;
-
+      await new Promise((r) => setTimeout(r, 500));
       setSuccess(true);
       setFormData({
         full_name: '',
@@ -76,11 +55,7 @@ export function ServiceTechnical() {
         branch_id: '',
         notes: '',
       });
-
       setTimeout(() => setSuccess(false), 5000);
-    } catch (error) {
-      console.error('Error submitting appointment:', error);
-      alert('Hubo un error al enviar la solicitud. Por favor intenta nuevamente.');
     } finally {
       setLoading(false);
     }
@@ -98,14 +73,14 @@ export function ServiceTechnical() {
 
   return (
     <div className="min-h-screen bg-bg-alt">
-      <div className="bg-primary text-white py-16">
+      <div className="bg-primary text-white py-14 rounded-b-[2rem]">
         <div className="container-custom">
           <div className="flex items-center justify-center mb-4">
-            <Wrench className="w-12 h-12 mr-4" />
-            <h1 className="text-4xl lg:text-5xl font-bold text-white">Servicio Técnico</h1>
+            <Wrench className="w-12 h-12 mr-4 flex-shrink-0" />
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Servicio Técnico</h1>
           </div>
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <p className="text-xl text-gray-200">
+            <p className="text-lg sm:text-xl text-white/90">
               Nuevo servicio técnico oficial Dongfeng en Las Condes y Mall Paseo Quilín
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
@@ -124,8 +99,8 @@ export function ServiceTechnical() {
 
       <div className="container-custom py-12">
         <div className="max-w-4xl mx-auto">
-          <Card className="p-8">
-            <h2 className="text-3xl font-bold mb-8 text-center">Agenda tu hora</h2>
+          <Card className="p-8 rounded-[1.5rem]">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center">Agenda tu hora</h2>
 
             {success && (
               <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">

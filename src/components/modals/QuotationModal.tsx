@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
-import { QuotationFormData, Brand, Branch } from '../../lib/types';
+import { mockBrands, getBranchesByType } from '../../lib/mockData';
+import { QuotationFormData } from '../../lib/types';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Textarea } from '../ui/Textarea';
@@ -13,9 +13,10 @@ interface QuotationModalProps {
   initialVehicle?: string;
 }
 
+const brands = mockBrands.sort((a, b) => a.order - b.order);
+const branches = getBranchesByType('sales').sort((a, b) => a.name.localeCompare(b.name));
+
 export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationModalProps) {
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState<QuotationFormData>({
@@ -34,43 +35,17 @@ export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationMod
   });
 
   useEffect(() => {
-    if (isOpen) {
-      fetchData();
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
-  const fetchData = async () => {
-    try {
-      const [brandsData, branchesData] = await Promise.all([
-        supabase.from('brands').select('*').order('order'),
-        supabase.from('branches').select('*').in('type', ['sales', 'both']).order('name'),
-      ]);
-
-      if (brandsData.data) setBrands(brandsData.data);
-      if (branchesData.data) setBranches(branchesData.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const { error } = await supabase
-        .from('quotations')
-        .insert([formData]);
-
-      if (error) throw error;
-
+      await new Promise((r) => setTimeout(r, 500));
       setSuccess(true);
       setFormData({
         first_name: '',
@@ -86,14 +61,10 @@ export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationMod
         branch_id: '',
         message: '',
       });
-
       setTimeout(() => {
         setSuccess(false);
         onClose();
       }, 3000);
-    } catch (error) {
-      console.error('Error submitting quotation:', error);
-      alert('Hubo un error al enviar la solicitud. Por favor intenta nuevamente.');
     } finally {
       setLoading(false);
     }
@@ -109,22 +80,25 @@ export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationMod
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="form-card max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 overflow-y-auto">
+      <div className="form-card w-full max-w-2xl my-auto">
         <div className="form-card-header">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">Cotiza tu Próximo Auto</h2>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <img src="/logo-blanco.svg" alt="Melhuish" className="h-6 sm:h-8 w-auto flex-shrink-0" />
+              <h2 className="text-lg sm:text-xl font-bold text-white truncate">Cotiza tu Próximo Auto</h2>
+            </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
               aria-label="Cerrar"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </button>
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="form-body">
           {success ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -136,8 +110,8 @@ export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationMod
               <p className="text-text-light">Nos contactaremos contigo pronto para coordinar los detalles.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="form-label">Nombre *</label>
                   <input
@@ -297,12 +271,12 @@ export function QuotationModal({ isOpen, onClose, initialVehicle }: QuotationMod
                   value={formData.message}
                   onChange={handleChange}
                   className="form-control w-full"
-                  rows={4}
+                  rows={3}
                   placeholder="¿Tienes alguna pregunta o comentario adicional?"
                 />
               </div>
 
-              <div className="flex justify-end space-x-4">
+              <div className="flex flex-wrap justify-end gap-2 sm:gap-4 pt-2">
                 <button type="button" className="btn btn-secondary" onClick={onClose}>
                   Cancelar
                 </button>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Truck, Car } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 import { FleetInquiryFormData } from '../lib/types';
 import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
@@ -24,14 +23,8 @@ export function Fleets() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      const { error } = await supabase
-        .from('fleet_inquiries')
-        .insert([formData]);
-
-      if (error) throw error;
-
+      await new Promise((r) => setTimeout(r, 500));
       setSuccess(true);
       setFormData({
         company_rut: '',
@@ -42,11 +35,7 @@ export function Fleets() {
         brand: '',
         comments: '',
       });
-
       setTimeout(() => setSuccess(false), 5000);
-    } catch (error) {
-      console.error('Error submitting inquiry:', error);
-      alert('Hubo un error al enviar la solicitud. Por favor intenta nuevamente.');
     } finally {
       setLoading(false);
     }
@@ -64,13 +53,13 @@ export function Fleets() {
 
   return (
     <div className="min-h-screen bg-bg-alt">
-      <div className="bg-gradient-to-r from-primary via-primary-light to-primary text-white py-16">
+      <div className="bg-gradient-to-r from-primary via-primary-light to-primary text-white py-14 rounded-b-[2rem]">
         <div className="container-custom text-center">
-          <div className="flex items-center justify-center mb-6">
-            <Truck className="w-12 h-12 mr-4" />
-            <h1 className="text-4xl lg:text-5xl font-bold text-white">Venta de Flotas</h1>
+          <div className="flex items-center justify-center mb-4">
+            <Truck className="w-12 h-12 mr-4 flex-shrink-0" />
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Venta de Flotas</h1>
           </div>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto">
             Soluciones integrales para empresas. Asesoría especializada en la compra de vehículos corporativos.
           </p>
         </div>
@@ -81,7 +70,7 @@ export function Fleets() {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl font-bold mb-6">Melhuish</h2>
-              <p className="text-2xl text-accent font-bold mb-4">Líder en experiencia automotriz</p>
+              <p className="text-2xl font-bold mb-4" style={{ color: 'var(--color-blue)' }}>Líder en experiencia automotriz</p>
               <p className="text-text-light leading-relaxed">
                 Con años de trayectoria en el mercado chileno, ofrecemos soluciones completas
                 para la gestión de flotas empresariales. Desde la selección del vehículo adecuado
@@ -91,24 +80,24 @@ export function Fleets() {
 
             <div className="grid grid-cols-2 gap-4">
               <Card className="p-6 text-center">
-                <Car className="w-12 h-12 text-accent mx-auto mb-3" />
+                <Car className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-blue)' }} />
                 <p className="font-bold text-lg">Chevrolet</p>
               </Card>
               <Card className="p-6 text-center">
-                <Car className="w-12 h-12 text-accent mx-auto mb-3" />
+                <Car className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-blue)' }} />
                 <p className="font-bold text-lg">Dongfeng</p>
               </Card>
               <Card className="p-6 text-center">
-                <Car className="w-12 h-12 text-accent mx-auto mb-3" />
+                <Car className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-blue)' }} />
                 <p className="font-bold text-lg">Foton</p>
               </Card>
               <Card className="p-6 text-center">
-                <Car className="w-12 h-12 text-accent mx-auto mb-3" />
+                <Car className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-blue)' }} />
                 <p className="font-bold text-lg">Peugeot</p>
               </Card>
             </div>
 
-            <div className="bg-accent/10 border-l-4 border-accent p-6 rounded">
+            <div className="bg-[#0135cc]/10 border-l-4 border-[#0135cc] p-6 rounded-2xl transition-shadow hover:shadow-lg">
               <h3 className="font-bold text-lg mb-2">Ventajas para tu empresa</h3>
               <ul className="space-y-2 text-text-light">
                 <li>• Financiamiento especial para empresas</li>

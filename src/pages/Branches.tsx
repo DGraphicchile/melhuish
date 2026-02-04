@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Phone, Mail, User } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { getBranchesByType, mockBranchStaff } from '../lib/mockData';
 import { Branch, BranchStaff } from '../lib/types';
 import { Card } from '../components/ui/Card';
 
@@ -11,39 +11,17 @@ export function Branches() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchData();
+    const data = getBranchesByType('sales').sort((a, b) => a.name.localeCompare(b.name));
+    setBranches(data);
+    if (data.length > 0) setSelectedBranch(data[0]);
+    const staffByBranch = mockBranchStaff.reduce((acc, member) => {
+      if (!acc[member.branch_id]) acc[member.branch_id] = [];
+      acc[member.branch_id].push(member);
+      return acc;
+    }, {} as Record<string, BranchStaff[]>);
+    setStaff(staffByBranch);
+    setLoading(false);
   }, []);
-
-  const fetchData = async () => {
-    try {
-      const [branchesData, staffData] = await Promise.all([
-        supabase.from('branches').select('*').in('type', ['sales', 'both']).order('name'),
-        supabase.from('branch_staff').select('*'),
-      ]);
-
-      if (branchesData.data) {
-        setBranches(branchesData.data);
-        if (branchesData.data.length > 0) {
-          setSelectedBranch(branchesData.data[0]);
-        }
-      }
-
-      if (staffData.data) {
-        const staffByBranch = staffData.data.reduce((acc, member) => {
-          if (!acc[member.branch_id]) {
-            acc[member.branch_id] = [];
-          }
-          acc[member.branch_id].push(member);
-          return acc;
-        }, {} as Record<string, BranchStaff[]>);
-        setStaff(staffByBranch);
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -55,10 +33,10 @@ export function Branches() {
 
   return (
     <div className="min-h-screen bg-bg-alt">
-      <div className="bg-primary text-white py-16">
+      <div className="bg-primary text-white py-14 rounded-b-[2rem]">
         <div className="container-custom text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-white">Nuestras Sucursales</h1>
-          <p className="text-xl text-gray-200">Visítanos en nuestras salas de venta</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 text-white">Nuestras Sucursales</h1>
+          <p className="text-lg sm:text-xl text-white/90">Visítanos en nuestras salas de venta</p>
         </div>
       </div>
 

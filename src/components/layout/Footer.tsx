@@ -2,8 +2,27 @@ import { Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="footer py-12">
+    <footer className="footer py-12 lg:py-16">
       <div className="container mx-auto px-4">
+        <div className="footer-top">
+          <a href="/" className="inline-block transition-opacity hover:opacity-90" aria-label="Melhuish - Inicio">
+            <img src="/logo-blanco.svg" alt="Melhuish" className="footer-logo h-10 w-auto" />
+          </a>
+          <p className="footer-tagline">
+            Líder en experiencia automotriz. Vehículos nuevos, seminuevos, servicio técnico y repuestos.
+          </p>
+          <div className="social-links">
+            <a href="https://facebook.com/melhuish" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Facebook">
+              <Facebook className="w-5 h-5" />
+            </a>
+            <a href="https://instagram.com/melhuish" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="https://linkedin.com/company/melhuish" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="footer-title">Enlaces Rápidos</h3>
@@ -90,35 +109,11 @@ export function Footer() {
 
           <div>
             <h3 className="footer-title">Síguenos</h3>
-            <div className="social-links">
-              <a
-                href="https://facebook.com/melhuish"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://instagram.com/melhuish"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com/company/melhuish"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
+            <ul className="footer-links">
+              <li><a href="https://facebook.com/melhuish" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+              <li><a href="https://instagram.com/melhuish" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li><a href="https://linkedin.com/company/melhuish" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
           </div>
         </div>
 

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Filter, Fuel, Settings } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { mockBrands, mockVehicleCategories, mockVehicles } from '../lib/mockData';
 import { Vehicle, Brand, VehicleCategory } from '../lib/types';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -11,10 +11,9 @@ interface NewVehiclesProps {
 }
 
 export function NewVehicles({ brandSlug }: NewVehiclesProps) {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [categories, setCategories] = useState<VehicleCategory[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [brands] = useState<Brand[]>(mockBrands.sort((a, b) => a.order - b.order));
+  const [categories] = useState<VehicleCategory[]>(mockVehicleCategories.sort((a, b) => a.name.localeCompare(b.name)));
+  const [loading, setLoading] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<string>(brandSlug || '');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedFuel, setSelectedFuel] = useState<string>('');
@@ -22,75 +21,23 @@ export function NewVehicles({ brandSlug }: NewVehiclesProps) {
   const [sortBy, setSortBy] = useState<string>('order');
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (brandSlug) {
-      setSelectedBrand(brandSlug);
-    }
+    if (brandSlug) setSelectedBrand(brandSlug);
   }, [brandSlug]);
 
-  useEffect(() => {
-    fetchVehicles();
-  }, [selectedBrand, selectedCategory, selectedFuel, selectedTransmission, sortBy]);
-
-  const fetchData = async () => {
-    try {
-      const [brandsData, categoriesData] = await Promise.all([
-        supabase.from('brands').select('*').order('order'),
-        supabase.from('vehicle_categories').select('*').order('name'),
-      ]);
-
-      if (brandsData.data) setBrands(brandsData.data);
-      if (categoriesData.data) setCategories(categoriesData.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+  const vehicles = useMemo(() => {
+    let list = mockVehicles.filter((v) => v.is_active);
+    if (selectedBrand) {
+      const brand = brands.find((b) => b.slug === selectedBrand);
+      if (brand) list = list.filter((v) => v.brand_id === brand.id);
     }
-  };
-
-  const fetchVehicles = async () => {
-    setLoading(true);
-    try {
-      let query = supabase
-        .from('vehicles')
-        .select('*, brands!inner(name, slug)')
-        .eq('is_active', true);
-
-      if (selectedBrand) {
-        query = query.eq('brands.slug', selectedBrand);
-      }
-
-      if (selectedCategory) {
-        query = query.eq('category_id', selectedCategory);
-      }
-
-      if (selectedFuel) {
-        query = query.eq('fuel_type', selectedFuel);
-      }
-
-      if (selectedTransmission) {
-        query = query.eq('transmission', selectedTransmission);
-      }
-
-      if (sortBy === 'price_asc') {
-        query = query.order('price_financing', { ascending: true });
-      } else if (sortBy === 'price_desc') {
-        query = query.order('price_financing', { ascending: false });
-      } else {
-        query = query.order('order', { ascending: true });
-      }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-      setVehicles(data || []);
-    } catch (error) {
-      console.error('Error fetching vehicles:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (selectedCategory) list = list.filter((v) => v.category_id === selectedCategory);
+    if (selectedFuel) list = list.filter((v) => v.fuel_type === selectedFuel);
+    if (selectedTransmission) list = list.filter((v) => v.transmission === selectedTransmission);
+    if (sortBy === 'price_asc') list = [...list].sort((a, b) => (a.price_financing ?? 0) - (b.price_financing ?? 0));
+    else if (sortBy === 'price_desc') list = [...list].sort((a, b) => (b.price_financing ?? 0) - (a.price_financing ?? 0));
+    else list = [...list].sort((a, b) => a.order - b.order);
+    return list;
+  }, [selectedBrand, selectedCategory, selectedFuel, selectedTransmission, sortBy, brands]);
 
   const formatPrice = (price: number | null, includesIva: boolean) => {
     if (!price) return 'Consultar';
@@ -98,11 +45,11 @@ export function NewVehicles({ brandSlug }: NewVehiclesProps) {
   };
 
   return (
-    <div className="min-h-screen bg-deep-gray">
+    <div className="min-h-screen bg-white">
       <div className="page-header">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-white">Autos Nuevos</h1>
-          <p className="text-xl text-gray-200">Encuentra el vehículo perfecto para ti</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 text-white">Autos Nuevos</h1>
+          <p className="text-lg sm:text-xl text-white/90">Encuentra el vehículo perfecto para ti</p>
         </div>
       </div>
 
@@ -219,7 +166,7 @@ export function NewVehicles({ brandSlug }: NewVehiclesProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {vehicles.map((vehicle) => (
                   <div key={vehicle.id} className="car-card">
-                    <div className="aspect-video relative">
+                    <div className="car-card-image-wrap">
                       {vehicle.image_url ? (
                         <img
                           src={vehicle.image_url}

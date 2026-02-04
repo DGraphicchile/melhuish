@@ -1,0 +1,75 @@
+/* Melhuish - Tipografías locales (public/flexo) */
+
+/* Flexo - Títulos y encabezados */
+@font-face {
+  font-family: 'Flexo';
+  src: url('/flexo/Flexo-Regular.woff2') format('woff2'), url('/flexo/Flexo-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Flexo';
+  src: url('/flexo/Flexo-Medium.woff2') format('woff2'), url('/flexo/Flexo-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Flexo';
+  src: url('/flexo/Flexo-Demi.woff2') format('woff2'), url('/flexo/Flexo-Demi.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Flexo';
+  src: url('/flexo/Flexo-Bold.woff2') format('woff2'), url('/flexo/Flexo-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Flexo';
+  src: url('/flexo/Flexo-Heavy.woff2') format('woff2'), url('/flexo/Flexo-Heavy.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Source Sans 3 - Párrafos y cuerpo (carpeta public) */
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/flexo/Source_Sans_3/static/SourceSans3-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/flexo/Source_Sans_3/static/SourceSans3-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/flexo/Source_Sans_3/static/SourceSans3-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/flexo/Source_Sans_3/static/SourceSans3-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
