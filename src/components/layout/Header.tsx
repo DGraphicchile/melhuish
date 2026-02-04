@@ -64,7 +64,7 @@ export function Header() {
             </a>
           </nav>
 
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center navbar-actions">
             <button className="btn btn-navbar-cotizar" onClick={() => window.location.href = '/?modal=cotizar'}>
               Cotizar
             </button>

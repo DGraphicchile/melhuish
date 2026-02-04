@@ -107,7 +107,9 @@ a:hover {
   .navbar-nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    margin-left: 2rem;
   }
 }
 
@@ -117,7 +119,8 @@ a:hover {
     padding-right: 2rem;
   }
   .navbar-nav {
-    gap: 1rem;
+    gap: 1.35rem;
+    margin-left: 2.5rem;
   }
 }
 
@@ -127,7 +130,8 @@ a:hover {
     padding-right: 2.5rem;
   }
   .navbar-nav {
-    gap: 1.25rem;
+    gap: 1.6rem;
+    margin-left: 3rem;
   }
 }
 
@@ -162,6 +166,7 @@ a:hover {
   border-radius: var(--radius-btn);
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
   font-size: clamp(0.9375rem, 1.8vw, 1rem);
+  white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -1740,6 +1745,14 @@ main div[class*="rounded-b"] + * {
 .btn-agendar-navbar {
   white-space: nowrap;
   border-radius: 9999px;
+}
+
+/* Espacio entre nav y botones Cotizar / Agendar */
+@media (min-width: 1024px) {
+  .navbar-actions {
+    margin-left: 1.25rem;
+    gap: 1rem;
+  }
 }
 
 /* Brand Cards - Compactas */
