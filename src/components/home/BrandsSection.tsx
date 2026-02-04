@@ -6,7 +6,7 @@ const brands = [
 
 export function BrandsSection() {
   return (
-    <section className="brands-section py-12 lg:py-16">
+    <section className="brands-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <p className="text-sm font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-light-blue)' }}>

@@ -1744,7 +1744,7 @@ main div[class*="rounded-b"] + * {
 
 /* Brand Cards - Compactas */
 .brands-section {
-  padding: 48px 0;
+  padding: 5.5rem 0 6rem;
   position: relative;
   overflow: hidden;
   background-color: #0a0d1a;
@@ -1790,7 +1790,7 @@ main div[class*="rounded-b"] + * {
 
 @media (max-width: 767px) {
   .brands-section {
-    padding: 2.5rem 0 3rem;
+    padding: 3.5rem 0 4rem;
   }
   .brands-section h2 {
     margin-bottom: 1.5rem;
