@@ -1,0 +1,708 @@
+/* Melhuish Car Dealership - Official Brand Styles - Compact Version */
+
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+
+:root {
+  /* Primary Colors */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-blue: #0135cc;
+  --color-light-blue: #53c5fe;
+
+  /* Secondary Colors */
+  --color-deep-gray: #19171f;
+  --color-dark-blue: #122571;
+  --color-light-black: #bcc0cd;
+  --color-ash-gray: #6d7281;
+  --color-light-cyan: #c0f4f9;
+  --color-cyan: #00dae8;
+  --color-gray: #495057;
+
+  /* Gradients */
+  --gradient-black-blue: linear-gradient(135deg, #000000 0%, #0135cc 100%);
+  --gradient-lightblue-blue: linear-gradient(135deg, #53c5fe 0%, #0135cc 100%);
+  --gradient-cyan-blue: linear-gradient(135deg, #00dae8 0%, #0135cc 100%);
+
+  /* Typography */
+  --font-heading: "Flexo-Bold", -apple-system, BlinkMacSystemFont, "Arial Black", sans-serif;
+  --font-body: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+
+  --header-height: 56px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 14px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background-color: var(--color-white);
+  color: var(--color-deep-gray);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Typography - Más compacta */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.125rem; }
+h4 { font-size: 1rem; }
+
+p, span, li, td, label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--color-blue);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-light-blue);
+}
+
+/* Navigation - Compacta */
+.navbar {
+  background: var(--gradient-black-blue);
+  padding: 10px 0;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid var(--color-dark-blue);
+}
+
+.navbar-brand img {
+  transition: transform 0.3s ease;
+  filter: brightness(0) invert(1);
+  width: 120px;
+}
+
+.nav-link {
+  color: var(--color-white) !important;
+  font-family: var(--font-body);
+  font-weight: 400;
+  padding: 6px 12px;
+  margin: 0 2px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-light-blue) !important;
+  background: rgba(83, 197, 254, 0.1);
+}
+
+/* Hero Carousel - Compacto */
+.hero-carousel {
+  padding-top: var(--header-height);
+  height: 400px;
+  position: relative;
+}
+
+.hero-carousel .carousel-item {
+  height: 400px;
+}
+
+.hero-carousel .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(1, 53, 204, 0.4) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-carousel-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  padding: 16px;
+}
+
+.hero-carousel-content h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero-carousel-content p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-light-blue);
+}
+
+.carousel-indicators button.active {
+  background-color: var(--color-cyan);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Page Headers - Compactos */
+.page-header {
+  padding: 80px 0 40px;
+  background: var(--color-deep-gray);
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1rem;
+}
+
+/* Buttons - Compactos */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 0.875rem;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background: var(--color-dark-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(1, 53, 204, 0.3);
+}
+
+.btn-secondary {
+  background: var(--color-ash-gray);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover {
+  background: var(--color-dark-blue);
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--color-blue);
+  color: var(--color-blue);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Brand Cards - Compactas */
+.brands-section {
+  background: var(--color-black);
+  padding: 48px 0;
+}
+
+.brands-section h2 {
+  margin-bottom: 32px;
+}
+
+.brand-card {
+  background: rgba(25, 23, 31, 0.3);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+}
+
+.brand-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(83, 197, 254, 0.3);
+  background: var(--color-blue);
+  border-color: var(--color-light-blue);
+}
+
+.brand-card .w-24 {
+  width: 64px;
+  height: 64px;
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-white);
+}
+
+/* Car Cards - Compactas */
+.car-card {
+  background: var(--color-white);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(1, 53, 204, 0.2);
+  border-color: var(--color-light-blue);
+}
+
+.car-image {
+  width: 100%;
+  max-width: 200px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  margin: 16px auto 0;
+}
+
+.car-card:hover .car-image {
+  transform: scale(1.05);
+}
+
+.car-card-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-brand {
+  display: inline-block;
+  color: var(--color-gray);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #f3f4f6;
+}
+
+.car-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--color-deep-gray);
+}
+
+.car-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-blue);
+  margin-top: auto;
+  font-family: var(--font-heading);
+}
+
+.price-desde {
+  font-size: 0.75rem;
+  color: var(--color-ash-gray);
+  font-weight: 400;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Filters - Compactos */
+.filters-bar {
+  background: var(--color-deep-gray);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-dark-blue);
+}
+
+.filters-bar h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.form-select,
+.form-control {
+  background-color: var(--color-white);
+  color: var(--color-deep-gray);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(1, 53, 204, 0.1);
+  outline: none;
+}
+
+.form-label {
+  color: var(--color-white);
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.875rem;
+  display: block;
+}
+
+/* Branch Cards - Compactas */
+.branch-card {
+  background: var(--color-white);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.branch-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(83, 197, 254, 0.2);
+  border-color: var(--color-light-blue);
+}
+
+.branch-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-deep-gray);
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+}
+
+.branch-info {
+  color: var(--color-gray);
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+/* Forms - Compactos */
+.form-card {
+  background: var(--color-deep-gray);
+  border: 1px solid var(--color-blue);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(1, 53, 204, 0.2);
+}
+
+.form-card-header {
+  background: var(--color-blue);
+  padding: 24px;
+  text-align: center;
+}
+
+.form-card-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.form-card form {
+  padding: 24px;
+}
+
+/* Footer - Compacto */
+.footer {
+  background: var(--color-dark-blue);
+  border-top: 2px solid var(--color-blue);
+  padding: 40px 0 20px;
+}
+
+.footer-title {
+  color: var(--color-white);
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+}
+
+.footer-links a {
+  color: var(--color-light-black);
+  transition: color 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.footer-links a:hover {
+  color: var(--color-light-blue);
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.social-link:hover {
+  background: var(--color-cyan);
+  transform: translateY(-2px);
+}
+
+.social-link i {
+  color: var(--color-white);
+}
+
+.footer-legal {
+  color: var(--color-ash-gray);
+  font-size: 0.75rem;
+  margin-top: 20px;
+}
+
+/* WhatsApp - Compacto */
+.whatsapp-float {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: var(--color-white);
+  border-radius: 50%;
+  text-align: center;
+  font-size: 24px;
+  box-shadow: 0 3px 10px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  background: #20ba5a;
+  transform: scale(1.1);
+}
+
+/* Utilities */
+.text-light-gray {
+  color: var(--color-light-black);
+}
+
+.text-gray {
+  color: var(--color-gray);
+}
+
+.bg-deep-gray {
+  background-color: var(--color-deep-gray);
+}
+
+.bg-black {
+  background-color: var(--color-black);
+}
+
+/* Spacing System - Sistema de 8px */
+.py-16 { padding-top: 48px; padding-bottom: 48px; }
+.py-12 { padding-top: 32px; padding-bottom: 32px; }
+.py-8 { padding-top: 24px; padding-bottom: 24px; }
+.mb-12 { margin-bottom: 32px; }
+.mb-8 { margin-bottom: 24px; }
+.mb-6 { margin-bottom: 16px; }
+.mb-4 { margin-bottom: 12px; }
+.mb-2 { margin-bottom: 6px; }
+
+/* Mega Menu - Compacto */
+.mega-dropdown {
+  position: static;
+}
+
+.mega-menu {
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 992px) {
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #0c0d0d;
+    padding: 32px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+    border-top: 2px solid #53c5fe;
+    z-index: 999;
+    display: block;
+  }
+
+  .mega-dropdown:hover > .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mega-brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.25s ease;
+    text-align: center;
+  }
+
+  .mega-brand-card img {
+    max-height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: transform 0.25s ease;
+  }
+
+  .mega-brand-card span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-white);
+  }
+
+  .mega-brand-card:hover {
+    background: rgba(83, 197, 254, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .mega-brand-card:hover img {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: var(--color-blue);
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .mega-dropdown .mega-menu {
+    position: static !important;
+    width: 100%;
+    display: none !important;
+    background: rgba(12, 13, 13, 0.98);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    padding: 16px;
+  }
+
+  .mega-dropdown.open > .mega-menu {
+    display: block !important;
+  }
+
+  .mega-brand-card {
+    padding: 12px;
+  }
+
+  .mega-brand-card img {
+    max-height: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 13px;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+
+  .hero-carousel {
+    height: 300px;
+  }
+
+  .hero-carousel .carousel-item {
+    height: 300px;
+  }
+
+  .page-header {
+    padding: 60px 0 30px;
+  }
+
+  .whatsapp-float {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
+/* Container ajustado */
+.container {
+  max-width: 1200px;
+}
+
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Secciones con padding reducido */
+section {
+  padding: 48px 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 32px 0;
+  }
+}
